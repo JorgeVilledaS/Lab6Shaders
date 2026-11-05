@@ -25,7 +25,7 @@
     color = palette(color, [0.78, 0.9, 0.88], ice * 0.95);
     color = lit(color, n, 0.2);
     const clouds = options.clouds === false ? 0 : smooth(PARAMS.cloudThreshold, PARAMS.cloudThreshold + 0.09, cloudField(p, time));
-    if (clouds > 0 && options.shadows !== false) {
+    if (options.clouds !== false && options.shadows !== false) {
       const displaced = [p[0] + 0.035, p[1] - 0.035, p[2] - 0.02];
       const shadow = smooth(PARAMS.cloudThreshold, PARAMS.cloudThreshold + 0.08, cloudField(displaced, time));
       color = color.map(v => v * (1 - shadow * 0.27));

@@ -1,7 +1,7 @@
 (function (root) {
   const c = typeof module !== 'undefined' ? require('./shader-common') : root.ShaderCommon;
   const { clamp, smooth, palette, fbm, noise, lit, diagnostic } = c;
-  const PARAMS = { bandFrequency: 18, warpStrength: 0.24, stormLongitude: 0.55, stormLatitude: -0.13, stormSize: 0.25 };
+  const PARAMS = { bandFrequency: 18, warpStrength: 0.24, stormLongitude: 1.9, stormLatitude: -0.13, stormSize: 0.25 };
   function gas(p, n, time = 0, options = {}) {
     const lon = Math.atan2(p[2], p[0]);
     const wind = fbm(p[0] * 4 + time * 0.1, p[1] * 5, p[2] * 4, 4) - 0.5;
