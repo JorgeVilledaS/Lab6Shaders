@@ -1,0 +1,14 @@
+{
+  "name": "atlas-de-mundos-shaders-cpu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tres cuerpos celestes procedurales sobre la misma esfera OBJ, rasterizados en CPU",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "render:star": "node tools/render.js star docs/screenshots/helia.png 420",
+    "render:rocky": "node tools/render.js rocky docs/screenshots/nacar.png 420",
+    "render:gas": "node tools/render.js gas docs/screenshots/vespera.png 420",
+    "render:gif": "node tools/render.js rocky docs/animation/nubes.gif 240"
+  },
+  "engines": { "node": ">=18" }
+}
