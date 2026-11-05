@@ -3,26 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080c19">
-  <title>Atlas de mundos · Laboratorio de shaders CPU</title>
+  <meta name="theme-color" content="#000000">
+  <title>Laboratorio de shaders CPU</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="shell">
-    <header class="topbar"><span class="brand-mark">✳</span><span class="brand">ATLAS DE MUNDOS</span><span class="edition">LAB / 01 — GRÁFICAS POR COMPUTADORA</span></header>
-    <section class="intro">
-      <p class="eyebrow">UNA GEOMETRÍA · TRES IDENTIDADES</p>
-      <h1>La materia de<br><em>otros mundos.</em></h1>
-      <p class="lede">Una misma esfera OBJ, tres superficies creadas píxel a píxel con shaders procedurales en CPU. Elige un cuerpo y explora cómo se construye.</p>
-    </section>
+    <header class="topbar">
+      <h1>Laboratorio de shaders</h1>
+      <p>Una esfera OBJ, tres apariencias generadas en CPU.</p>
+    </header>
     <section class="workbench" aria-label="Visor de cuerpos celestes">
       <aside class="selector">
-        <div class="section-label">01 / ELIGE UN CUERPO</div>
-        <button class="planet-choice active" data-kind="star" aria-pressed="true"><span class="choice-index">01</span><span><strong>Helia</strong><small>Estrella activa</small></span><span class="choice-dot sun"></span></button>
-        <button class="planet-choice" data-kind="rocky" aria-pressed="false"><span class="choice-index">02</span><span><strong>Nácar</strong><small>Mundo oceánico</small></span><span class="choice-dot ocean"></span></button>
-        <button class="planet-choice" data-kind="gas" aria-pressed="false"><span class="choice-index">03</span><span><strong>Véspera</strong><small>Gigante gaseoso</small></span><span class="choice-dot gas"></span></button>
+        <div class="section-label">Seleccionar</div>
+        <button class="planet-choice active" data-kind="star" aria-pressed="true"><strong>Planeta 1</strong><small>Estrella activa</small></button>
+        <button class="planet-choice" data-kind="rocky" aria-pressed="false"><strong>Planeta 2</strong><small>Mundo oceánico</small></button>
+        <button class="planet-choice" data-kind="gas" aria-pressed="false"><strong>Planeta 3</strong><small>Gigante gaseoso</small></button>
         <div class="divider"></div>
-        <div class="section-label">02 / INSPECCIONA</div>
+        <div class="section-label">Opciones</div>
         <label class="switch-row"><span>Patrón en grises<small>Revela las máscaras</small></span><input id="grayscale" type="checkbox"><span class="switch"></span></label>
         <label class="switch-row" id="clouds-row"><span>Nubes<small>Atmósfera independiente</small></span><input id="clouds" type="checkbox" checked><span class="switch"></span></label>
         <label class="switch-row" id="shadows-row"><span>Sombras de nubes<small>Desplazamiento de máscara</small></span><input id="shadows" type="checkbox" checked><span class="switch"></span></label>
@@ -33,9 +31,8 @@
         <div class="viewer-bottom"><span>ARRASTRA PARA ROTAR</span><span id="render-status">CPU · 420 × 420</span></div>
       </div>
       <aside class="details">
-        <div class="section-label">03 / FICHA TÉCNICA</div>
-        <div class="detail-number" id="detail-number">01 / 03</div>
-        <h2 id="planet-name">Helia</h2>
+        <div class="section-label">Descripción</div>
+        <h2 id="planet-name">Planeta 1</h2>
         <p class="planet-type" id="planet-type">ESTRELLA ACTIVA</p>
         <p class="description" id="description">Una fotosfera turbulenta: gránulos de calor, zonas oscuras y un pulso sutil que sugiere energía interna.</p>
         <div class="detail-rule"></div>
@@ -47,7 +44,7 @@
         <div class="actions"><button id="play" class="primary">Ⅱ &nbsp; Pausar</button><button id="save" title="Descargar PNG" aria-label="Descargar imagen PNG">↓</button></div>
       </aside>
     </section>
-    <footer><span>SHADERS PROCEDURALES · SIN TEXTURAS · SIN WEBGL</span><span>TECLAS 1–3 PARA CAMBIAR · ESPACIO PARA PAUSAR</span></footer>
+    <footer>Teclas 1–3 para cambiar · Espacio para pausar · Arrastra para rotar</footer>
   </main>
   <script src="src/math.js"></script><script src="src/noise.js"></script><script src="src/shader-common.js"></script><script src="src/star.js"></script><script src="src/rocky.js"></script><script src="src/gas.js"></script><script src="src/obj.js"></script><script src="src/renderer.js"></script><script src="src/sphere-data.js"></script><script src="src/app.js"></script>
 </body>

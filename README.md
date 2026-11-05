@@ -1,36 +1,36 @@
-# Atlas de mundos — laboratorio de shaders procedurales en CPU
+# Laboratorio de shaders procedurales en CPU
 
-Una **sola esfera OBJ** da forma a Helia, Nácar y Véspera. Un rasterizador de triángulos en JavaScript recorre los fragmentos en CPU, calcula su posición y normal interpoladas, y llama a uno de tres shaders. No se usan WebGL, imágenes de textura, materiales externos ni geometría adicional. `assets/sphere.obj` es una copia intacta de la esfera proporcionada (98 vértices, 192 caras triangulares). `src/sphere-data.js` contiene el mismo texto para que `index.html` funcione incluso al abrirlo con `file://`.
+Una **sola esfera OBJ** da forma a Planeta 1, Planeta 2 y Planeta 3. Un rasterizador de triángulos en JavaScript recorre los fragmentos en CPU, calcula su posición y normal interpoladas, y llama a uno de tres shaders. No se usan WebGL, imágenes de textura, materiales externos ni geometría adicional. `assets/sphere.obj` es una copia intacta de la esfera proporcionada (98 vértices, 192 caras triangulares). `src/sphere-data.js` contiene el mismo texto para que `index.html` funcione incluso al abrirlo con `file://`.
 
 ## Ejecutar
 
 1. Abre **`index.html`** en un navegador moderno. No hay que compilar ni instalar paquetes. La fuente visual usa fuentes del sistema y el proyecto funciona sin internet.
 2. Elige un cuerpo con los botones o las teclas **1, 2 y 3**. Arrastra la esfera para girarla. Usa **Espacio** para pausar y el control de tiempo para estudiar un instante concreto.
-3. Activa **Patrón en grises** para ver la señal que decide las regiones de color. En Nácar puedes activar y desactivar nubes y sombras por separado. El botón **↓** guarda el fotograma actual en PNG.
+3. Activa **Patrón en grises** para ver la señal que decide las regiones de color. En Planeta 2 puedes activar y desactivar nubes y sombras por separado. El botón **↓** guarda el fotograma actual en PNG.
 
 La primera imagen puede tardar un instante porque todos los píxeles se calculan en CPU. El indicador superior muestra el tiempo de renderizado.
 
 ## Cuerpos celestes
 
-### 1. Helia — estrella activa
+### Planeta 1 — estrella activa
 
-![Helia, estrella naranja con gránulos, manchas y zonas brillantes](docs/screenshots/helia.png)
+![Planeta 1, estrella naranja con gránulos, manchas y zonas brillantes](docs/screenshots/helia.png)
 
 [Patrón en escala de grises](docs/screenshots/helia-patron.png) · [GIF del flujo y pulso](docs/animation/helia.gif)
 
-`src/star.js:star` mezcla ruido fractal de alta frecuencia con una onda horizontal distorsionada por ruido de baja frecuencia. La señal **heat** alimenta una paleta de tres temperaturas; otra máscara de ruido define manchas oscuras. El tiempo desplaza el flujo y modula ligeramente el brillo. Helia emite su propio color, así que no utiliza la luz externa. Para experimentar, cambia `PARAMS.granulation` (tamaño de los gránulos), `turbulence` (deformación), `spotThreshold` (cantidad de manchas) o `pulseSpeed` (velocidad del pulso).
+`src/star.js:star` mezcla ruido fractal de alta frecuencia con una onda horizontal distorsionada por ruido de baja frecuencia. La señal **heat** alimenta una paleta de tres temperaturas; otra máscara de ruido define manchas oscuras. El tiempo desplaza el flujo y modula ligeramente el brillo. Planeta 1 emite su propio color, así que no utiliza la luz externa. Para experimentar, cambia `PARAMS.granulation` (tamaño de los gránulos), `turbulence` (deformación), `spotThreshold` (cantidad de manchas) o `pulseSpeed` (velocidad del pulso).
 
-### 2. Nácar — planeta rocoso y oceánico
+### Planeta 2 — planeta rocoso y oceánico
 
-![Nácar, planeta azul con continentes, hielo y nubes](docs/screenshots/nacar.png)
+![Planeta 2, planeta azul con continentes, hielo y nubes](docs/screenshots/nacar.png)
 
 [Patrón en escala de grises](docs/screenshots/nacar-patron.png) · [GIF de nubes móviles](docs/animation/nubes.gif) · [GIF de iluminación y reflejo al girar](docs/animation/luz-y-reflejo.gif)
 
 `src/rocky.js:rocky` utiliza ruido fractal para decidir la altitud. Un umbral suave `seaLevel` separa océano y tierra; un intervalo estrecho crea la costa. Ruido fino rompe los bordes y añade variedad a la tierra. La latitud genera casquetes polares. `cloudField` gira sus coordenadas con `cloudSpeed`, por lo que la capa atmosférica se mueve sobre un terreno fijo. Una segunda muestra desplazada de esa máscara oscurece la superficie como sombra. La iluminación difusa afecta al terreno y al mar; el océano recibe un brillo especular localizado. Cambia `PARAMS.continentScale`, `seaLevel`, `cloudThreshold`, `cloudSpeed` o `iceLatitude` para observar el resultado.
 
-### 3. Véspera — gigante gaseoso
+### Planeta 3 — gigante gaseoso
 
-![Véspera, gigante gaseoso con bandas curvas y tormenta espiral](docs/screenshots/vespera.png)
+![Planeta 3, gigante gaseoso con bandas curvas y tormenta espiral](docs/screenshots/vespera.png)
 
 [Patrón en escala de grises](docs/screenshots/vespera-patron.png) · [GIF de corrientes lentas](docs/animation/vespera.gif)
 
@@ -42,19 +42,19 @@ Cada fila señala un comportamiento observable una sola vez. La consigna facilit
 
 | Efecto | Cuerpo | Archivo y función | Evidencia | Parámetro y cambio visible |
 |---|---|---|---|---|
-| Superficie solar turbulenta y manchas | Helia | `src/star.js:star` | [Imagen](docs/screenshots/helia.png) | `spotThreshold`: reduce o amplía las zonas oscuras. |
-| Material animado independiente de las nubes | Helia | `src/star.js:star` | [GIF](docs/animation/helia.gif) | `pulseSpeed`: acelera el pulso luminoso. |
-| Regiones de océano, continentes y costa | Nácar | `src/rocky.js:rocky` | [Imagen](docs/screenshots/nacar.png) | `seaLevel`: cambia la proporción de mar y tierra. |
-| Hielo polar | Nácar | `src/rocky.js:rocky` | [Imagen](docs/screenshots/nacar.png) | `iceLatitude`: mueve el inicio del hielo. |
-| Nubes con movimiento propio | Nácar | `src/rocky.js:cloudField`, `rocky` | [GIF](docs/animation/nubes.gif) | `cloudSpeed`: modifica su velocidad respecto al terreno. |
-| Sombras de nubes | Nácar | `src/rocky.js:rocky` | [GIF](docs/animation/nubes.gif) | Desplazamiento `displaced`: cambia la separación nube/sombra. |
-| Reflejo del océano y luz difusa | Nácar | `src/rocky.js:rocky`, `src/shader-common.js:lit` | [GIF al girar](docs/animation/luz-y-reflejo.gif) | Exponente `35`: estrecha o extiende el brillo. |
-| Bandas líquidas deformadas | Véspera | `src/gas.js:gas` | [Imagen](docs/screenshots/vespera.png) | `warpStrength`: modifica cuánto serpentean las bandas. |
-| Tormenta elíptica espiral | Véspera | `src/gas.js:gas` | [Imagen](docs/screenshots/vespera.png) | `stormSize`: cambia el diámetro de la tormenta. |
+| Superficie solar turbulenta y manchas | Planeta 1 | `src/star.js:star` | [Imagen](docs/screenshots/helia.png) | `spotThreshold`: reduce o amplía las zonas oscuras. |
+| Material animado independiente de las nubes | Planeta 1 | `src/star.js:star` | [GIF](docs/animation/helia.gif) | `pulseSpeed`: acelera el pulso luminoso. |
+| Regiones de océano, continentes y costa | Planeta 2 | `src/rocky.js:rocky` | [Imagen](docs/screenshots/nacar.png) | `seaLevel`: cambia la proporción de mar y tierra. |
+| Hielo polar | Planeta 2 | `src/rocky.js:rocky` | [Imagen](docs/screenshots/nacar.png) | `iceLatitude`: mueve el inicio del hielo. |
+| Nubes con movimiento propio | Planeta 2 | `src/rocky.js:cloudField`, `rocky` | [GIF](docs/animation/nubes.gif) | `cloudSpeed`: modifica su velocidad respecto al terreno. |
+| Sombras de nubes | Planeta 2 | `src/rocky.js:rocky` | [GIF](docs/animation/nubes.gif) | Desplazamiento `displaced`: cambia la separación nube/sombra. |
+| Reflejo del océano y luz difusa | Planeta 2 | `src/rocky.js:rocky`, `src/shader-common.js:lit` | [GIF al girar](docs/animation/luz-y-reflejo.gif) | Exponente `35`: estrecha o extiende el brillo. |
+| Bandas líquidas deformadas | Planeta 3 | `src/gas.js:gas` | [Imagen](docs/screenshots/vespera.png) | `warpStrength`: modifica cuánto serpentean las bandas. |
+| Tormenta elíptica espiral | Planeta 3 | `src/gas.js:gas` | [Imagen](docs/screenshots/vespera.png) | `stormSize`: cambia el diámetro de la tormenta. |
 
 ## Cómo funciona
 
-`src/obj.js:parseOBJ` lee las posiciones y caras de la esfera, la centra y escala sin modificar el archivo ni su topología. `src/renderer.js:render` proyecta sus 192 triángulos, calcula coordenadas baricéntricas y usa un **z-buffer** para conservar el fragmento visible. La posición interpolada se normaliza y se pasa al shader junto con la normal rotada, el tiempo y las opciones de diagnóstico. Los tres shaders usan la **misma instancia de malla**. `src/noise.js` contiene ruido de valor tridimensional determinista y `fbm` combina octavas. El halo de Helia y el fondo son efectos de pantalla; no añaden modelos a la escena.
+`src/obj.js:parseOBJ` lee las posiciones y caras de la esfera, la centra y escala sin modificar el archivo ni su topología. `src/renderer.js:render` proyecta sus 192 triángulos, calcula coordenadas baricéntricas y usa un **z-buffer** para conservar el fragmento visible. La posición interpolada se normaliza y se pasa al shader junto con la normal rotada, el tiempo y las opciones de diagnóstico. Los tres shaders usan la **misma instancia de malla**. `src/noise.js` contiene ruido de valor tridimensional determinista y `fbm` combina octavas. El halo de Planeta 1 y el fondo son efectos de pantalla; no añaden modelos a la escena.
 
 ## Exportar y probar
 

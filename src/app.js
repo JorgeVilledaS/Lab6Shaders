@@ -3,9 +3,9 @@
   const canvas = document.getElementById('scene'), ctx = canvas.getContext('2d');
   const timeInput = document.getElementById('time');
   const bodies = {
-    star: { name: 'Helia', type: 'ESTRELLA ACTIVA', description: 'Una fotosfera turbulenta: gránulos de calor, zonas oscuras y un pulso sutil que sugiere energía interna.', pattern: 'Ruido fractal + ondas', motion: 'Pulso y flujo térmico', lighting: 'Emisión propia' },
-    rocky: { name: 'Nácar', type: 'MUNDO OCEÁNICO', description: 'Continentes minerales rodeados por mares profundos. Casquetes polares y nubes móviles proyectan sombra sobre la superficie.', pattern: 'Umbrales + máscara polar', motion: 'Nubes a otra velocidad', lighting: 'Difusa + brillo del mar' },
-    gas: { name: 'Véspera', type: 'GIGANTE GASEOSO', description: 'Ríos de color se doblan con turbulencia. Una tormenta ovalada rompe las bandas de la atmósfera.', pattern: 'Bandas deformadas + remolino', motion: 'Corrientes lentas', lighting: 'Difusa ambiental' }
+    star: { name: 'Planeta 1', type: 'ESTRELLA ACTIVA', description: 'Una fotosfera turbulenta: gránulos de calor, zonas oscuras y un pulso sutil que sugiere energía interna.', pattern: 'Ruido fractal + ondas', motion: 'Pulso y flujo térmico', lighting: 'Emisión propia' },
+    rocky: { name: 'Planeta 2', type: 'MUNDO OCEÁNICO', description: 'Continentes minerales rodeados por mares profundos. Casquetes polares y nubes móviles proyectan sombra sobre la superficie.', pattern: 'Umbrales + máscara polar', motion: 'Nubes a otra velocidad', lighting: 'Difusa + brillo del mar' },
+    gas: { name: 'Planeta 3', type: 'GIGANTE GASEOSO', description: 'Ríos de color se doblan con turbulencia. Una tormenta ovalada rompe las bandas de la atmósfera.', pattern: 'Bandas deformadas + remolino', motion: 'Corrientes lentas', lighting: 'Difusa ambiental' }
   };
   let kind = 'star', time = 0, playing = true, yaw = 0.35, pitch = -0.12, rendering = false;
   function draw() {
@@ -22,7 +22,6 @@
     kind = value;
     document.querySelectorAll('.planet-choice').forEach(b => { const active = b.dataset.kind === kind; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
     const data = bodies[kind];
-    document.getElementById('detail-number').textContent = `${String(Object.keys(bodies).indexOf(kind) + 1).padStart(2, '0')} / 03`;
     for (const [id, value] of Object.entries({ 'planet-name': data.name, 'planet-type': data.type, description: data.description, pattern: data.pattern, motion: data.motion, lighting: data.lighting })) document.getElementById(id).textContent = value;
     for (const id of ['clouds-row', 'shadows-row']) document.getElementById(id).classList.toggle('disabled', kind !== 'rocky');
     draw();
@@ -32,7 +31,7 @@
   timeInput.addEventListener('input', () => { time = Number(timeInput.value); document.getElementById('time-value').textContent = time.toFixed(1) + ' s'; draw(); });
   function setPlaying(value) { playing = value; document.getElementById('play').innerHTML = value ? 'Ⅱ &nbsp; Pausar' : '▶ &nbsp; Reproducir'; }
   document.getElementById('play').addEventListener('click', () => setPlaying(!playing));
-  document.getElementById('save').addEventListener('click', () => { const a = document.createElement('a'); a.download = `${kind}-${time.toFixed(1)}.png`; a.href = canvas.toDataURL('image/png'); a.click(); });
+  document.getElementById('save').addEventListener('click', () => { const a = document.createElement('a'); a.download = `${bodies[kind].name.toLowerCase().replace(' ', '-')}-${time.toFixed(1)}.png`; a.href = canvas.toDataURL('image/png'); a.click(); });
   document.addEventListener('keydown', e => { if (e.target.tagName === 'INPUT') return; if ('123'.includes(e.key) && e.key.length === 1) select(['star', 'rocky', 'gas'][Number(e.key) - 1]); if (e.code === 'Space') { e.preventDefault(); setPlaying(!playing); } });
   let drag = null;
   canvas.addEventListener('pointerdown', e => { drag = [e.clientX, e.clientY]; canvas.setPointerCapture(e.pointerId); });
